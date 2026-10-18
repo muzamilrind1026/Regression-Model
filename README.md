@@ -9,9 +9,8 @@ import statsmodels.api as sm
 # Set random seed for reproducibility
 np.random.seed(42)
 
-# =====================================================================
+
 # 1. GENERATE SYNTHETIC DATA (Exhibiting Non-linearity & Heteroscedasticity)
-# =====================================================================
 n = 100
 x = np.linspace(1, 10, n)
 
@@ -20,9 +19,7 @@ true_signal = 2.0 * np.exp(0.3 * x)
 noise = np.random.normal(loc=0, scale=0.5 * x)  # Variance increases with x
 y = np.maximum(true_signal + noise, 0.1)        # Ensure positive y for log transform
 
-# =====================================================================
 # 2. CHAPTER 4: FIT INITIAL OLS MODEL & GRAPHICAL DIAGNOSTICS
-# =====================================================================
 X_ols = sm.add_constant(x)
 model_ols = sm.OLS(y, X_ols).fit()
 
@@ -61,9 +58,7 @@ axes[1, 1].set_ylabel('Residuals ($e$)')
 plt.tight_layout()
 plt.show()
 
-# =====================================================================
 # 3. CHAPTER 5: MODEL REMEDIATION VIA LOG TRANSFORMATION y* = ln(y)
-# =====================================================================
 # Apply linearizing & variance-stabilizing log transformation
 y_trans = np.log(y)
 model_trans = sm.OLS(y_trans, X_ols).fit()
