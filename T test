@@ -1,0 +1,23 @@
+import numpy as np
+import scipy.stats as stats
+
+groupA = np.array([85, 88, 90, 82, 85])
+groupB = np.array([72, 75, 78, 70, 75])
+
+meanA, stdA = np.mean(groupA), np.std(groupA, ddof=1)
+meanB, stdB = np.mean(groupB), np.std(groupB, ddof=1)
+
+print(f"Group A - Mean: {meanA:.2f}, Std Dev: {stdA:.2f}")
+print(f"Group B - Mean: {meanB:.2f}, Std Dev: {stdB:.2f}")
+
+t_stat, p_val = stats.ttest_ind(groupA, groupB, equal_var=True)
+
+print(" Two-Sample t-Test Results ")
+print(f"t-statistic : {t_stat:.4f}")
+print(f"p-value     : {p_val:.6f}")
+
+alpha = 0.05
+if p_val < alpha:
+    print("Decision    : Reject H0")
+else:
+    print("Decision    : Fail to reject H0")
