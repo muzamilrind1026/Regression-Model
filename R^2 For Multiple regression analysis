@@ -1,0 +1,88 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+X1 = np.array([1, 2, 3, 4, 5, 6])
+X2 = np.array([2, 1, 2, 3, 4, 3])
+Y  = np.array([50, 55, 65, 70, 80, 85])
+
+n = len(Y)
+
+X = np.column_stack((np.ones(n), X1, X2))
+
+print("Design Matrix X:")
+print(X)
+
+XT = X.T
+
+print("\nTranspose of X:")
+print(XT)
+
+XTX = XT @ X
+
+print("\nX transpose X:")
+print(XTX)
+
+XTX_inverse = np.linalg.inv(XTX)
+
+print("\nInverse of X transpose X:")
+print(XTX_inverse)
+
+XTY = XT @ Y
+
+print("\nX transpose Y:")
+print(XTY)
+
+beta_hat = XTX_inverse @ XTY
+
+print("\nBeta coefficients:")
+print(beta_hat)
+
+b0 = beta_hat[0]
+b1 = beta_hat[1]
+b2 = beta_hat[2]
+
+print("\nb0 =", b0)
+print("b1 =", b1)
+print("b2 =", b2)
+
+Y_hat = b0 + b1*X1 + b2*X2
+
+print("\nRegression Model:")
+print(f"Y_hat = {b0} + {b1}*X1 + {b2}*X2")
+
+print("\nPredicted values:")
+print(Y_hat)
+
+residuals = Y - Y_hat
+
+print("\nResiduals:")
+print(residuals)
+
+Y_mean = np.mean(Y)
+
+SSR = np.sum((Y_hat - Y_mean)**2)
+SSE = np.sum((Y - Y_hat)**2)
+SST = np.sum((Y - Y_mean)**2)
+
+print("\nSSR =", SSR)
+print("SSE =", SSE)
+print("SST =", SST)
+
+R2 = 1 - (SSE/SST)
+
+print("\nR-squared =", R2)
+print("R-squared percentage =", R2*100, "%")
+
+plt.figure(figsize=(8, 5))
+
+plt.scatter(Y_hat, residuals, marker='o')
+
+plt.axhline(y=0, color='red', linestyle='--')
+
+plt.xlabel("Fitted Values")
+plt.ylabel("Residuals")
+plt.title("Residuals vs Fitted Values")
+
+plt.grid(True)
+plt.show()
