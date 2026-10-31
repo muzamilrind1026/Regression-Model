@@ -1,0 +1,16 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+x1 = np.array([1, 2, 3, 4, 5, 6, 7, 8], dtype=float)
+x2 = np.array([2, 1, 4, 3, 6, 5, 8, 7], dtype=float)
+y  = np.array([17, 17, 26, 26, 36, 35, 48, 44], dtype=float)
+
+yhat = 9.4125 + 1.7875 * x1 + 3.0375 * x2
+e = y - yhat
+
+plt.scatter(yhat, e)
+plt.axhline(0, color="red")
+plt.xlabel("Fitted values (ŷ)")
+plt.ylabel("Residuals (e)")
+plt.title("Residuals vs Fitted values")
+plt.show()
